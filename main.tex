@@ -1,0 +1,101 @@
+\documentclass[11pt]{book}
+
+\usepackage[T1]{fontenc}
+\usepackage[default]{lato}
+\usepackage[hidelinks]{hyperref}  % before apacite
+\usepackage[skip=0pt, indent=2.5em]{parskip}
+
+\usepackage{graphicx}
+\usepackage{apacite}
+
+\usepackage{geometry}
+\geometry{
+    paperwidth=18.8cm,
+    paperheight=27cm,
+    right=2.3cm,
+    left=1.9cm,
+    top=2.6cm,
+    bottom=3.9cm,
+}
+
+\usepackage{fancyhdr}
+\fancyhf{}
+\fancyhead[RO,LE]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\headheight}{13.59999pt}
+
+\usepackage{epigraph}
+\setlength{\epigraphwidth}{0.8\textwidth}
+
+\usepackage{titlesec}
+\usepackage{titletoc}
+
+\titleformat{\chapter}[block]{\normalfont\bfseries}{\thechapter.~}{0pt}{\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{1.5em}{0pt}
+\titlecontents{chapter}[0em]{\bfseries\addvspace{0.5em}}{\thecontentslabel.~}{}{\titlerule*[1pc]{.}\contentspage}[]
+
+\titleclass{\study}{straight}[\chapter]
+\newcounter{study}
+\titleformat{\study}[block]{\normalfont\bfseries}{Study~\thestudy:~}{0pt}{\MakeUppercase}
+\titlespacing*{\study}{0pt}{1.5em}{0pt}
+\titlecontents{study}[0em]{\bfseries\addvspace{0.5em}}{Study~\thecontentslabel:~}{}{\titlerule*[1pc]{.}\contentspage}[]
+\counterwithin{section}{study}
+\counterwithin{section}{chapter}
+
+\titleformat{\section}[block]{\normalfont}{\thesection.~}{0pt}{\MakeUppercase}[]
+\titlespacing*{\section}{0pt}{1.5em}{0pt}
+\titlecontents{section}[2em]{}{\thecontentslabel.~}{}{\titlerule*[1pc]{.}\contentspage}[]
+
+\titleformat{\subsection}[runin]{\normalfont}{}{0pt}{\MakeUppercase}[.\ ]
+\titlespacing*{\subsection}{0pt}{1em}{1em}
+
+% Workaround for \nameref not working with hyperref + titlesec + unnumbered parts
+% https://tex.stackexchange.com/questions/397031/conflict-with-hyperref-and-titlesec
+\makeatletter
+\newcommand*{\unnumberedchapter}[1]{%
+  \chapter*{#1}%
+  \NR@gettitle{#1}%
+}
+\makeatother
+
+\usepackage{changepage}
+\newenvironment{aside}%
+{\vspace{0.5em}\begin{adjustwidth*}{+2cm}{-1cm}ASIDE.~}%
+{\end{adjustwidth*}\vspace{0.5em}}
+
+\setcounter{tocdepth}{2}
+\linespread{1.25}
+\renewcommand\bibliographytypesize{\footnotesize}
+
+\usepackage{subfiles}  % Include Last
+
+% Temp packages
+% \usepackage{todonotes}
+% \usepackage[switch*]{lineno}
+% \linenumbers
+
+
+\begin{document}
+
+\pagestyle{empty}
+
+\subfile{chapters/title}
+
+\subfile{chapters/abstract}
+
+\tableofcontents
+\addtocontents{toc}{\protect\thispagestyle{empty}}
+
+\clearpage
+
+\pagestyle{fancyplain}
+
+\subfile{chapters/my-first-chapter/main}
+
+\backmatter
+
+\bibliographystyle{apacite}
+\bibliography{references.bib}
+
+\end{document}

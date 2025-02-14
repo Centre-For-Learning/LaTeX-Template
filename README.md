@@ -17,7 +17,7 @@ The main document organisation is as follows:
 │   ├── abstract.tex
 │   ├── title.tex
 │   └── my-first-chapter/
-│       ├── graphics/
+│       ├── assets/
 │       └── main.tex
 ├── main.tex
 ├── Makefile
